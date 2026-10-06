@@ -13,6 +13,8 @@ export type Profile = {
 
 /** Загружает профиль и роль текущего пользователя. Роль хранится отдельно и меняется только вручную. */
 export async function fetchProfile(userId: string): Promise<Profile> {
+  // Привязать к аккаунту записи, сделанные ранее без входа на тот же (подтверждённый) email.
+  await (supabase.rpc as unknown as (fn: string) => Promise<unknown>)("claim_my_appointments");
   const [{ data: roles }, { data: prof }] = await Promise.all([
     supabase.from("user_roles").select("role").eq("user_id", userId),
     supabase

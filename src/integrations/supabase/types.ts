@@ -221,6 +221,7 @@ export type Database = {
         }[]
       }
       cancel_my_appointment: { Args: { p_id: string }; Returns: undefined }
+      claim_my_appointments: { Args: never; Returns: number }
       current_doctor_id: { Args: never; Returns: string }
       doctor_search_patients: {
         Args: { p_query: string }
