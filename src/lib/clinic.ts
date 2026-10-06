@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { SERVICES } from "./services-data";
 
 export const CLINIC = {
   doctor: "Иванов Иван Иванович",
@@ -50,15 +51,9 @@ export const formatPrice = (value: number) =>
 
 export const servicesQuery = {
   queryKey: ["services"],
-  queryFn: async (): Promise<Service[]> => {
-    const { data, error } = await supabase
-      .from("services")
-      .select("id, name, description, price, category, sort_order")
-      .order("sort_order", { ascending: true });
-    if (error) throw error;
-    return (data ?? []) as Service[];
-  },
-  staleTime: 5 * 60 * 1000,
+  queryFn: async (): Promise<Service[]> => SERVICES,
+  initialData: SERVICES,
+  staleTime: Infinity,
 };
 
 export type Doctor = {
