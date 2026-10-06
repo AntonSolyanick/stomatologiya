@@ -42,6 +42,7 @@ function MyAppointments() {
     queryKey: ["my-appointments", user?.id],
     enabled: !!user,
     queryFn: async (): Promise<Row[]> => {
+      await (supabase.rpc as unknown as (fn: string) => Promise<unknown>)("claim_my_appointments");
       const { data, error } = await supabase
         .from("appointments")
         .select("id, appointment_date, appointment_time, status, services(name, price), doctors(full_name)")
