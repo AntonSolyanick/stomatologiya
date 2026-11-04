@@ -8,7 +8,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 // GitHub Pages build (static SPA under /<repo>/). Only active when GITHUB_PAGES=true,
 // so Lovable preview/publish builds stay unchanged.
-const pagesBase = process.env.GITHUB_PAGES === "true" ? process.env.PAGES_BASE || "/stomatologiya/" : null;
+const pagesBase = process.env["GITHUB_PAGES"] === "true" ? process.env["PAGES_BASE"] || "/stomatologiya/" : null;
 
 export default defineConfig(
   pagesBase
