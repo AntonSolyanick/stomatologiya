@@ -15,7 +15,7 @@ import { cancelMyAppointment, formatPrice } from "@/lib/clinic";
 export const Route = createFileRoute("/my-appointments")({
   head: () => ({
     meta: [
-      { title: "Мои записи — Стоматология Иванова" },
+      { title: "Мои записи — Стоматология" },
       { name: "description", content: "Предстоящие приёмы и история визитов пациента: дата, время, врач, услуга и стоимость." },
       { property: "og:title", content: "Мои записи к стоматологу" },
       { property: "og:description", content: "Предстоящие приёмы и история визитов пациента." },

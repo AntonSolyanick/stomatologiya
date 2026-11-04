@@ -81,13 +81,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Стоматология Иванова — частный стоматолог в Москве" },
+      { title: "Стоматология — частный стоматолог в Луганске" },
       {
         name: "description",
         content:
-          "Частная практика стоматолога Иванова И.И. в Москве: лечение, гигиена, протезирование, имплантация. Онлайн-запись на приём.",
+          "Частная практика стоматолога в Луганске: лечение, гигиена, протезирование, имплантация. Онлайн-запись на приём.",
       },
-      { name: "author", content: "Стоматология Иванова" },
+      { name: "author", content: "Стоматология" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
