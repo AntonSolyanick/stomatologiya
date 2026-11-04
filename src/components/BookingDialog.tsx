@@ -185,7 +185,7 @@ export function BookingDialog({
                   </p>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Приходите за 10 минут до приёма: {`г. Москва, ул. Примерная, д. 10, каб. 25`}
+                  Приходите за 10 минут до приёма: {CLINIC.address}
                 </p>
                 <div className="flex flex-col gap-2 sm:flex-row">
                   <Button variant="outline" className="flex-1" onClick={restart}>
