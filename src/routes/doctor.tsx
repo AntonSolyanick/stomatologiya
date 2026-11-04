@@ -4,7 +4,7 @@ import { DoctorRoute } from "@/components/DoctorRoute";
 export const Route = createFileRoute("/doctor")({
   head: () => ({
     meta: [
-      { title: "Кабинет врача — Стоматология Иванова" },
+      { title: "Кабинет врача — Стоматология" },
       { name: "description", content: "Закрытый кабинет врача: приёмы, пациенты и расписание." },
       { name: "robots", content: "noindex" },
       { property: "og:title", content: "Кабинет врача" },

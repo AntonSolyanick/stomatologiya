@@ -4,7 +4,7 @@ import { SERVICES } from "./services-data";
 export const CLINIC = {
   doctor: "Иванов Иван Иванович",
   role: "Стоматолог-терапевт, ортопед",
-  name: "Стоматология Иванова",
+  name: "Стоматология",
   address: "г. Москва, ул. Примерная, д. 10, каб. 25",
   phone: "+7 (495) 123-45-67",
   phoneHref: "+74951234567",

@@ -9,13 +9,13 @@ import { CLINIC, doctorsQuery } from "@/lib/clinic";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Стоматология Иванова — частный стоматолог в Москве" },
+      { title: "Стоматология — частный стоматолог в Луганске" },
       {
         name: "description",
         content:
-          "Иванов Иван Иванович, стоматолог-терапевт и ортопед. 10 лет практики, более 5000 пациентов. Онлайн-запись на приём в Москве.",
+          "Иванов Иван Иванович, стоматолог-терапевт и ортопед. 10 лет практики, более 5000 пациентов. Онлайн-запись на приём в Луганске.",
       },
-      { property: "og:title", content: "Стоматология Иванова — частный стоматолог в Москве" },
+      { property: "og:title", content: "Стоматология — частный стоматолог в Луганске" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       {
@@ -65,7 +65,7 @@ function Index() {
         <div className="absolute inset-0 bg-hero-gradient" />
         <div className="relative mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
           <p className="animate-rise text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-            Частная практика в Москве
+            Частная практика в Луганске
           </p>
           <h1 className="animate-rise mt-4 text-4xl font-extrabold text-primary-deep sm:text-5xl lg:text-6xl">
             {CLINIC.doctor}

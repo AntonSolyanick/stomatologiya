@@ -11,7 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/register")({
   head: () => ({
     meta: [
-      { title: "Регистрация пациента — Стоматология Иванова" },
+      { title: "Регистрация пациента — Стоматология" },
       {
         name: "description",
         content:
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/register")({
       { property: "og:title", content: "Регистрация пациента" },
       {
         property: "og:description",
-        content: "Аккаунт для онлайн-записи и истории приёмов у стоматолога Иванова.",
+        content: "Аккаунт для онлайн-записи и истории приёмов у стоматолога.",
       },
     ],
   }),
