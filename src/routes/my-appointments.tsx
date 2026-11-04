@@ -29,7 +29,7 @@ type Row = {
   appointment_date: string;
   appointment_time: string;
   status: string;
-  services: { name: string; price: number } | null;
+  services: { name: string; price: number | null } | null;
   doctors: { full_name: string } | null;
 };
 

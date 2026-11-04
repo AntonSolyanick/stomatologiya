@@ -1,5 +1,4 @@
 import { supabase } from "@/integrations/supabase/client";
-import { SERVICES } from "./services-data";
 
 export const CLINIC = {
   doctor: "Иванов Иван Иванович",
@@ -29,7 +28,7 @@ export type Service = {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price: number | null;
   category: string;
   sort_order: number;
 };
@@ -46,14 +45,22 @@ export type Appointment = {
   created_at: string;
 };
 
-export const formatPrice = (value: number) =>
-  new Intl.NumberFormat("ru-RU").format(value) + " ₽";
+export const formatPrice = (value: number | null | undefined) =>
+  value == null ? "Цена по запросу" : new Intl.NumberFormat("ru-RU").format(value) + " ₽";
 
 export const servicesQuery = {
   queryKey: ["services"],
-  queryFn: async (): Promise<Service[]> => SERVICES,
-  initialData: SERVICES,
-  staleTime: Infinity,
+  queryFn: async (): Promise<Service[]> => {
+    const { data, error } = await supabase
+      .from("services")
+      .select("id, name, description, price, category, sort_order")
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true })
+      .order("created_at", { ascending: true });
+    if (error) throw error;
+    return (data ?? []) as Service[];
+  },
+  staleTime: 60_000,
 };
 
 export type Doctor = {
@@ -192,7 +199,7 @@ export type DoctorAppointment = {
   appointment_date: string;
   appointment_time: string;
   status: AppointmentStatus;
-  services: { name: string; price: number } | null;
+  services: { name: string; price: number | null } | null;
 };
 
 /** Все приёмы текущего врача (RLS ограничивает строками этого врача). */
