@@ -152,8 +152,9 @@ export type Database = {
           created_at: string
           description: string
           id: string
+          is_active: boolean
           name: string
-          price: number
+          price: number | null
           sort_order: number
         }
         Insert: {
@@ -161,8 +162,9 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          is_active?: boolean
           name: string
-          price: number
+          price?: number | null
           sort_order?: number
         }
         Update: {
@@ -170,8 +172,9 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          is_active?: boolean
           name?: string
-          price?: number
+          price?: number | null
           sort_order?: number
         }
         Relationships: []

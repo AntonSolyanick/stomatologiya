@@ -18,10 +18,16 @@ const doctorLinks = [
   { to: "/doctor/patients", label: "Пациенты" },
 ] as const;
 
+const adminLinks = [
+  { to: "/", label: "Главная" },
+  { to: "/services", label: "Услуги" },
+  { to: "/admin/services", label: "Управление услугами" },
+] as const;
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const { user, loading, isDoctor } = useProfile();
-  const nav = isDoctor ? doctorLinks : links;
+  const { user, loading, isDoctor, isAdmin } = useProfile();
+  const nav = isAdmin ? adminLinks : isDoctor ? doctorLinks : links;
   const router = useRouter();
 
   const signOut = async () => {
@@ -54,7 +60,7 @@ export function SiteHeader() {
         <div className="hidden items-center gap-2 md:flex">
           {loading ? null : user ? (
             <>
-              {!isDoctor && <Button asChild variant="ghost" size="sm">
+              {!isDoctor && !isAdmin && <Button asChild variant="ghost" size="sm">
                 <Link to="/my-appointments">
                   <CalendarCheck className="size-4" />
                   Мои записи
@@ -108,7 +114,7 @@ export function SiteHeader() {
           <div className="mt-2 flex flex-col gap-2">
             {user ? (
               <>
-                {!isDoctor && <Button asChild variant="outline">
+                {!isDoctor && !isAdmin && <Button asChild variant="outline">
                   <Link to="/my-appointments" onClick={() => setOpen(false)}>
                     Мои записи
                   </Link>

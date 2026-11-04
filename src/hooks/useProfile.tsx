@@ -38,7 +38,7 @@ export async function fetchProfile(userId: string): Promise<Profile> {
     profile = row;
   }
   const list = (roles ?? []).map((r) => r.role as string);
-  const role = list.includes("doctor") ? "doctor" : list.includes("admin") ? "admin" : "patient";
+  const role = list.includes("admin") ? "admin" : list.includes("doctor") ? "doctor" : "patient";
   return { ...profile, role } as Profile;
 }
 
@@ -56,6 +56,7 @@ export function useProfile() {
     profile,
     loading: authLoading || (!!user && q.isLoading),
     isDoctor: profile?.role === "doctor",
+    isAdmin: profile?.role === "admin",
     isPatient: !!profile && profile.role === "patient",
   };
 }

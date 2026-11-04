@@ -11,12 +11,12 @@ export const Route = createFileRoute("/services")({
       {
         name: "description",
         content:
-          "Прайс-лист стоматолога в Луганске: консультация 500 ₽, гигиена 3 500 ₽, лечение кариеса 3 000 ₽, коронки и имплантация. Цены ниже средних по РФ.",
+          "Услуги стоматологии в Луганске: реставрация зуба, металлокерамические коронки, удаление зубов, протезы. Запись онлайн.",
       },
       { property: "og:title", content: "Услуги и цены стоматолога" },
       {
         property: "og:description",
-        content: "20 направлений лечения с прозрачными ценами и записью онлайн.",
+        content: "Реставрация, коронки, удаление и протезирование зубов с записью онлайн.",
       },
     ],
   }),
@@ -44,9 +44,9 @@ function ServicesPage() {
             ))
           : services.map((s) => (
               <article key={s.id} className="flex flex-col p-6 surface-card hover:shadow-float">
-                <span className="w-fit rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
+                {s.category && s.category !== "Общее" && <span className="w-fit rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
                   {s.category}
-                </span>
+                </span>}
                 <h2 className="mt-4 text-lg font-bold">{s.name}</h2>
                 <p className="mt-2 flex-1 text-sm text-muted-foreground">{s.description}</p>
                 <p className="mt-5 font-display text-2xl font-extrabold text-primary-deep">
