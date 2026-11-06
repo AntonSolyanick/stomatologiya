@@ -38,9 +38,9 @@ function AdminServices() {
 
   const add = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim()) return;
+    if (!name.trim()) return undefined;
     const p = price.trim() === "" ? null : Number(price);
-    if (p !== null && (!Number.isFinite(p) || p < 0)) return toast.error("Некорректная цена");
+    if (p !== null && (!Number.isFinite(p) || p < 0)) { toast.error("Некорректная цена"); return; }
     setBusy(true);
     const { error } = await supabase.from("services").insert({
       name: name.trim(),
@@ -49,16 +49,16 @@ function AdminServices() {
       sort_order: services.length + 1,
     });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setName(""); setDescription(""); setPrice("");
     toast.success("Услуга добавлена");
     qc.invalidateQueries({ queryKey: ["services"] });
   };
 
   const hide = async (id: string) => {
-    if (!confirm("Убрать услугу из списка?")) return;
+    if (!confirm("Убрать услугу из списка?")) return undefined;
     const { error } = await supabase.from("services").update({ is_active: false }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["services"] });
   };
 
