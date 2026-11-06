@@ -89,9 +89,6 @@ function CalendarPage() {
           Онлайн-запись
         </p>
         <h1 className="mt-3 text-3xl font-extrabold sm:text-4xl">Выберите дату приёма</h1>
-        <p className="mt-3 text-muted-foreground">
-          После выбора даты останется указать время и услугу.
-        </p>
       </header>
 
       {doctors.length > 1 && (
