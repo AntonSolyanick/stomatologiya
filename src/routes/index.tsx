@@ -13,7 +13,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Иванов Иван Иванович, стоматолог-терапевт и ортопед. 10 лет практики, более 5000 пациентов. Онлайн-запись на приём в Луганске.",
+          "Иванов Иван Иванович, стоматолог-терапевт и ортопед. 10 лет практики. Онлайн-запись на приём в Луганске.",
       },
       { property: "og:title", content: "Стоматология — частный стоматолог в Луганске" },
       { property: "og:type", content: "website" },
@@ -74,7 +74,7 @@ function Index() {
             {CLINIC.role}
           </p>
           <p className="animate-rise mx-auto mt-6 max-w-xl text-base text-muted-foreground sm:text-lg">
-            10 лет практики. Более 5000 довольных пациентов. Индивидуальный подход к каждому.
+            10 лет практики. Индивидуальный подход к каждому.
           </p>
           <div className="animate-rise mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button asChild size="lg" className="w-full sm:w-auto">
