@@ -1,4 +1,4 @@
-import { MapPin, Phone, Clock } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { CLINIC } from "@/lib/clinic";
 
 export function SiteFooter() {
@@ -16,19 +16,9 @@ export function SiteFooter() {
             <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
             {CLINIC.address}
           </p>
-          <p className="flex items-start gap-2">
-            <Phone className="mt-0.5 size-4 shrink-0 text-primary" />
-            <a href={`tel:${CLINIC.phoneHref}`} className="hover:text-foreground">
-              {CLINIC.phone}
-            </a>
-          </p>
-          <p className="flex items-start gap-2">
-            <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
-            {CLINIC.hours}
-          </p>
         </div>
         <p className="text-sm text-muted-foreground md:text-right">
-          © {new Date().getFullYear()} {CLINIC.name}. Лицензия на медицинскую деятельность.
+          © {new Date().getFullYear()} {CLINIC.name}.
         </p>
       </div>
     </footer>

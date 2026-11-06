@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, Phone, Clock, Sparkles, ShieldCheck, HeartPulse, Microscope } from "lucide-react";
+import { MapPin, Sparkles, ShieldCheck, HeartPulse, Microscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-abstract.jpg";
 import { useQuery } from "@tanstack/react-query";
@@ -68,7 +68,7 @@ function Index() {
             Частная практика в Луганске
           </p>
           <h1 className="animate-rise mt-4 text-4xl font-extrabold text-primary-deep sm:text-5xl lg:text-6xl">
-            {CLINIC.doctor}
+            {CLINIC.name}
           </h1>
           <p className="animate-rise mt-4 text-lg font-medium text-primary-deep">
             {CLINIC.role}
@@ -90,31 +90,12 @@ function Index() {
       <Specialists />
 
       <section className="bg-soft-gradient">
-        <div className="mx-auto grid max-w-6xl gap-4 px-4 py-12 sm:grid-cols-3 sm:px-6">
-          <div className="surface-card flex items-start gap-3 p-5">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+          <div className="surface-card mx-auto flex max-w-md items-start gap-3 p-5">
             <MapPin className="mt-0.5 size-5 shrink-0 text-primary" />
             <div>
               <p className="text-sm font-semibold">Адрес кабинета</p>
               <p className="mt-1 text-sm text-muted-foreground">{CLINIC.address}</p>
-            </div>
-          </div>
-          <div className="surface-card flex items-start gap-3 p-5">
-            <Phone className="mt-0.5 size-5 shrink-0 text-primary" />
-            <div>
-              <p className="text-sm font-semibold">Телефон</p>
-              <a
-                href={`tel:${CLINIC.phoneHref}`}
-                className="mt-1 block text-sm text-muted-foreground hover:text-foreground"
-              >
-                {CLINIC.phone}
-              </a>
-            </div>
-          </div>
-          <div className="surface-card flex items-start gap-3 p-5">
-            <Clock className="mt-0.5 size-5 shrink-0 text-primary" />
-            <div>
-              <p className="text-sm font-semibold">Часы работы</p>
-              <p className="mt-1 text-sm text-muted-foreground">{CLINIC.hours}</p>
             </div>
           </div>
         </div>
