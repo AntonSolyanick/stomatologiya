@@ -39,7 +39,7 @@ export const Route = createFileRoute("/calendar")({
       {
         name: "description",
         content:
-          "Выберите удобную дату и время приёма стоматолога в Луганске. Свободные слоты Пн–Сб с 09:00 до 19:00.",
+          "Выберите удобную дату и время приёма стоматолога в Луганске. Свободные слоты видны прямо в календаре.",
       },
       { property: "og:title", content: "Онлайн-запись на приём к стоматологу" },
       {
@@ -90,8 +90,7 @@ function CalendarPage() {
         </p>
         <h1 className="mt-3 text-3xl font-extrabold sm:text-4xl">Выберите дату приёма</h1>
         <p className="mt-3 text-muted-foreground">
-          Приём ведётся Пн–Сб с 09:00 до 19:00. Воскресенье — выходной. После выбора даты
-          останется указать время и услугу.
+          После выбора даты останется указать время и услугу.
         </p>
       </header>
 
@@ -209,7 +208,7 @@ function CalendarPage() {
         <div className="mt-6 flex flex-col gap-2 border-t border-border pt-5 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p className="flex items-center gap-2">
             <Clock className="size-4 text-primary" />
-            Слоты по одному часу: 09:00 — 18:00
+            Слоты по одному часу
           </p>
           <p className="flex items-center gap-2">
             <Info className="size-4 text-primary" />
