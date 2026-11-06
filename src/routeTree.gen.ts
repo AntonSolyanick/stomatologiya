@@ -16,6 +16,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as MyAppointmentsRouteImport } from './routes/my-appointments'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as DoctorIndexRouteImport } from './routes/doctor.index'
 import { Route as DoctorPatientsRouteImport } from './routes/doctor.patients'
 import { Route as DoctorScheduleRouteImport } from './routes/doctor.schedule'
@@ -57,6 +58,11 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/admin/services',
+  path: '/admin/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DoctorIndexRoute = DoctorIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/my-appointments': typeof MyAppointmentsRoute
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
+  '/admin/services': typeof AdminServicesRoute
   '/doctor/patients': typeof DoctorPatientsRoute
   '/doctor/schedule': typeof DoctorScheduleRoute
   '/doctor/': typeof DoctorIndexRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/my-appointments': typeof MyAppointmentsRoute
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
+  '/admin/services': typeof AdminServicesRoute
   '/doctor/patients': typeof DoctorPatientsRoute
   '/doctor/schedule': typeof DoctorScheduleRoute
   '/doctor': typeof DoctorIndexRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/my-appointments': typeof MyAppointmentsRoute
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
+  '/admin/services': typeof AdminServicesRoute
   '/doctor/patients': typeof DoctorPatientsRoute
   '/doctor/schedule': typeof DoctorScheduleRoute
   '/doctor/': typeof DoctorIndexRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/my-appointments'
     | '/register'
     | '/services'
+    | '/admin/services'
     | '/doctor/patients'
     | '/doctor/schedule'
     | '/doctor/'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/my-appointments'
     | '/register'
     | '/services'
+    | '/admin/services'
     | '/doctor/patients'
     | '/doctor/schedule'
     | '/doctor'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/my-appointments'
     | '/register'
     | '/services'
+    | '/admin/services'
     | '/doctor/patients'
     | '/doctor/schedule'
     | '/doctor/'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   MyAppointmentsRoute: typeof MyAppointmentsRoute
   RegisterRoute: typeof RegisterRoute
   ServicesRoute: typeof ServicesRoute
+  AdminServicesRoute: typeof AdminServicesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -228,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/admin/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/doctor/': {
@@ -295,6 +315,7 @@ const rootRouteChildren: RootRouteChildren = {
   MyAppointmentsRoute: MyAppointmentsRoute,
   RegisterRoute: RegisterRoute,
   ServicesRoute: ServicesRoute,
+  AdminServicesRoute: AdminServicesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
