@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, Phone, Clock, Sparkles, ShieldCheck, HeartPulse, Microscope } from "lucide-react";
+import { MapPin, Sparkles, ShieldCheck, HeartPulse, Microscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-abstract.jpg";
 import { useQuery } from "@tanstack/react-query";
@@ -68,7 +68,7 @@ function Index() {
             Частная практика в Луганске
           </p>
           <h1 className="animate-rise mt-4 text-4xl font-extrabold text-primary-deep sm:text-5xl lg:text-6xl">
-            {CLINIC.doctor}
+            {CLINIC.name}
           </h1>
           <p className="animate-rise mt-4 text-lg font-medium text-primary-deep">
             {CLINIC.role}

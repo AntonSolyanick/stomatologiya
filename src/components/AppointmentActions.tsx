@@ -134,7 +134,7 @@ function RescheduleDialog({ row, onClose }: { row: DoctorAppointment; onClose: (
             />
           </div>
           {isSunday ? (
-            <p className="text-sm text-muted-foreground">Воскресенье — выходной день.</p>
+            <p className="text-sm text-muted-foreground">В этот день нет свободных слотов.</p>
           ) : (
             <div className="grid grid-cols-3 gap-2">
               {TIME_SLOTS.map((s) => {
