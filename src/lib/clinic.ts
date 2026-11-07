@@ -57,7 +57,7 @@ export const servicesQuery = {
     if (error) throw error;
     return (data ?? []) as Service[];
   },
-  staleTime: 60_000,
+  staleTime: 5 * 60 * 1000,
 };
 
 export type Doctor = {
@@ -128,6 +128,7 @@ export function bookedSlotsQuery(doctorId: string | null, from: string, to: stri
       }
       return map;
     },
+    staleTime: 30_000,
   };
 }
 
