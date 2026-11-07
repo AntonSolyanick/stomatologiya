@@ -25,7 +25,8 @@ import {
   formatPrice,
   isSlotTaken,
   searchPatients,
-  servicesQuery,
+  servicesQuery,,
+  findMyDoctor,
 } from "@/lib/clinic";
 
 export const Route = createFileRoute("/doctor/appointments/new")({

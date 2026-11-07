@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { useProfile } from "@/hooks/useProfile";
 import { supabase } from "@/integrations/supabase/client";
-import { doctorsQuery } from "@/lib/clinic";
+import { doctorsQuery, findMyDoctor } from "@/lib/clinic";
 
 export const Route = createFileRoute("/doctor/schedule")({
   component: Schedule,

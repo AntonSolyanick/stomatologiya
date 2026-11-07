@@ -20,7 +20,8 @@ import {
   doctorsQuery,
   updateAppointment,
   deleteAppointment,
-  type DoctorAppointment,
+  type DoctorAppointment,,
+  findMyDoctor,
 } from "@/lib/clinic";
 
 export function AppointmentActions({ row }: { row: DoctorAppointment }) {
