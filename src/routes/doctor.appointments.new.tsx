@@ -41,7 +41,7 @@ function NewAppointment() {
   const { profile } = useProfile();
   const { data: doctors = [] } = useQuery(doctorsQuery);
   const { data: services = [] } = useQuery(servicesQuery);
-  const doctorId = doctors.find((d) => d.user_id === profile?.id)?.id ?? null;
+  const doctorId = findMyDoctor(doctors, profile)?.id ?? null;
 
   const [date, setDate] = useState(format(new Date(), "yyyy-MM-dd"));
   const [time, setTime] = useState<string | null>(null);

@@ -18,7 +18,7 @@ export function DoctorRoute({ children }: { children: ReactNode }) {
       </div>
     );
   }
-  if (profile?.role !== "doctor") return <Navigate to="/" />;
+  if (profile?.role !== "doctor" && profile?.role !== "admin") return <Navigate to="/" />;
   return <>{children}</>;
 }
 

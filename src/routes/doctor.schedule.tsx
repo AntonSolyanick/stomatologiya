@@ -25,7 +25,7 @@ function Schedule() {
   const qc = useQueryClient();
   const { profile } = useProfile();
   const { data: doctors = [] } = useQuery(doctorsQuery);
-  const doctor = doctors.find((d) => d.user_id === profile?.id);
+  const doctor = findMyDoctor(doctors, profile);
   const [hours, setHours] = useState<Hours>({});
   const [saving, setSaving] = useState(false);
 

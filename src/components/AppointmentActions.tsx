@@ -86,7 +86,7 @@ function RescheduleDialog({ row, onClose }: { row: DoctorAppointment; onClose: (
   const qc = useQueryClient();
   const { profile } = useProfile();
   const { data: doctors = [] } = useQuery(doctorsQuery);
-  const doctorId = doctors.find((d) => d.user_id === profile?.id)?.id ?? null;
+  const doctorId = findMyDoctor(doctors, profile)?.id ?? null;
   const [date, setDate] = useState(row.appointment_date);
   const [time, setTime] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
