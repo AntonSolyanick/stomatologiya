@@ -199,7 +199,7 @@ function CalendarPage() {
               const disabled = isSunday || isPast || isFull;
               const isToday = isSameDay(day, today);
               // Чем больше записей, тем насыщеннее фон (один оттенок основного цвета).
-              const heat = disabled || takenCount === 0 ? 0 : 12 + Math.round((takenCount / TIME_SLOTS.length) * 58);
+              const heat = isPast || isSunday || takenCount === 0 ? 0 : 12 + Math.round((takenCount / TIME_SLOTS.length) * 58);
               const heatStyle = heat
                 ? { backgroundColor: `color-mix(in oklab, var(--primary) ${heat}%, var(--card))`, color: heat > 45 ? "var(--primary-foreground)" : undefined }
                 : undefined;
