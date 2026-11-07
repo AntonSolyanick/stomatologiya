@@ -20,7 +20,7 @@ import {
   doctorsQuery,
   updateAppointment,
   deleteAppointment,
-  type DoctorAppointment,,
+  type DoctorAppointment,
   findMyDoctor,
 } from "@/lib/clinic";
 

@@ -25,7 +25,7 @@ import {
   formatPrice,
   isSlotTaken,
   searchPatients,
-  servicesQuery,,
+  servicesQuery,
   findMyDoctor,
 } from "@/lib/clinic";
 
