@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { useProfile } from "@/hooks/useProfile";
 import { supabase } from "@/integrations/supabase/client";
-import { doctorsQuery } from "@/lib/clinic";
+import { doctorsQuery, findMyDoctor } from "@/lib/clinic";
 
 export const Route = createFileRoute("/doctor/schedule")({
   component: Schedule,
@@ -25,7 +25,7 @@ function Schedule() {
   const qc = useQueryClient();
   const { profile } = useProfile();
   const { data: doctors = [] } = useQuery(doctorsQuery);
-  const doctor = doctors.find((d) => d.user_id === profile?.id);
+  const doctor = findMyDoctor(doctors, profile);
   const [hours, setHours] = useState<Hours>({});
   const [saving, setSaving] = useState(false);
 

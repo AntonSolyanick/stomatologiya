@@ -227,3 +227,9 @@ export async function searchPatients(query: string) {
     birthdate: string | null;
   }[];
 }
+
+/** Врач, от имени которого работает текущий пользователь: свой профиль врача, а для администратора — врач клиники. */
+export function findMyDoctor(doctors: Doctor[], profile: { id: string; role: string } | null | undefined) {
+  if (!profile) return undefined;
+  return doctors.find((d) => d.user_id === profile.id) ?? (profile.role === "admin" ? doctors[0] : undefined);
+}

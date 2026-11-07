@@ -19,8 +19,9 @@ const doctorLinks = [
 ] as const;
 
 const adminLinks = [
-  { to: "/", label: "Главная" },
-  { to: "/services", label: "Услуги" },
+  { to: "/doctor", label: "Дашборд" },
+  { to: "/doctor/appointments", label: "Записи" },
+  { to: "/doctor/patients", label: "Пациенты" },
   { to: "/admin/services", label: "Управление услугами" },
 ] as const;
 

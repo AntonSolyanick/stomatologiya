@@ -68,7 +68,7 @@ function LoginPage() {
 
     const profile = signIn.user ? await fetchProfile(signIn.user.id) : null;
     toast.success("Вы вошли в личный кабинет");
-    if (profile?.role === "doctor") router.navigate({ to: "/doctor" });
+    if (profile?.role === "doctor" || profile?.role === "admin") router.navigate({ to: "/doctor" });
     else router.history.push(redirect && !redirect.startsWith("/doctor") ? redirect : "/calendar");
   };
 

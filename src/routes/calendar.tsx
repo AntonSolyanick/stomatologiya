@@ -14,11 +14,12 @@ import {
   subMonths,
 } from "date-fns";
 import { ru } from "date-fns/locale";
-import { ChevronLeft, ChevronRight, Clock, Info } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Info, ListOrdered } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookingDialog } from "@/components/BookingDialog";
-import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+import { Link } from "@tanstack/react-router";
 import {
   Select,
   SelectContent,
@@ -58,7 +59,8 @@ function CalendarPage() {
   const navigate = useNavigate({ from: "/calendar" });
   const { data: doctors = [], isLoading: doctorsLoading } = useQuery(doctorsQuery);
   const doctor = doctors.find((d) => d.id === doctorParam) ?? doctors[0] ?? null;
-  const { user } = useAuth();
+  const { user, profile } = useProfile();
+  const isStaff = profile?.role === "doctor" || profile?.role === "admin";
   const queryClient = useQueryClient();
   const today = startOfDay(new Date());
   const [month, setMonth] = useState(startOfMonth(today));
@@ -103,6 +105,14 @@ function CalendarPage() {
           Онлайн-запись
         </p>
         <h1 className="mt-3 text-3xl font-extrabold sm:text-4xl">Выберите дату приёма</h1>
+        {user && (
+          <Button asChild variant="outline" className="mt-6">
+            <Link to={isStaff ? "/doctor/appointments" : "/my-appointments"}>
+              <ListOrdered className="size-4" />
+              {isStaff ? "Все записи пациентов" : "Мои записи"}
+            </Link>
+          </Button>
+        )}
       </header>
 
       {doctors.length > 1 && (
@@ -188,6 +198,11 @@ function CalendarPage() {
               const isFull = takenCount >= TIME_SLOTS.length;
               const disabled = isSunday || isPast || isFull;
               const isToday = isSameDay(day, today);
+              // Чем больше записей, тем насыщеннее фон (один оттенок основного цвета).
+              const heat = isPast || isSunday || takenCount === 0 ? 0 : 12 + Math.round((takenCount / TIME_SLOTS.length) * 58);
+              const heatStyle = heat
+                ? { backgroundColor: `color-mix(in oklab, var(--primary) ${heat}%, var(--card))`, color: heat > 45 ? "var(--primary-foreground)" : undefined }
+                : undefined;
 
               return (
                 <button
@@ -195,6 +210,7 @@ function CalendarPage() {
                   type="button"
                   disabled={disabled}
                   onClick={() => setSelected(day)}
+                  style={heatStyle}
                   className={`flex aspect-square flex-col items-center justify-center rounded-xl border text-sm font-semibold transition-all ${
                     disabled
                       ? "cursor-not-allowed border-transparent bg-muted/50 text-muted-foreground/60"
@@ -203,7 +219,7 @@ function CalendarPage() {
                 >
                   {format(day, "d")}
                   {!disabled && (
-                    <span className="mt-0.5 hidden text-[10px] font-normal text-muted-foreground sm:block">
+                    <span className={`mt-0.5 hidden text-[10px] font-normal sm:block ${heat > 45 ? "" : "text-muted-foreground"}`}>
                       {TIME_SLOTS.length - takenCount} своб.
                     </span>
                   )}
