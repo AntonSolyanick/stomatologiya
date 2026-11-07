@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -71,6 +71,20 @@ function CalendarPage() {
   const slotsQ = bookedSlotsQuery(doctor?.id ?? null, rangeFrom, rangeTo);
   const { data: booked = {}, isLoading: slotsQLoading } = useQuery(slotsQ);
   const slotsLoading = doctorsLoading || slotsQLoading;
+
+  // Заранее подгружаем следующий месяц, чтобы переключение было мгновенным.
+  const doctorId = doctor?.id ?? null;
+  useEffect(() => {
+    if (!doctorId) return;
+    const next = addMonths(month, 1);
+    queryClient.prefetchQuery(
+      bookedSlotsQuery(
+        doctorId,
+        format(startOfMonth(next), "yyyy-MM-dd"),
+        format(endOfMonth(next), "yyyy-MM-dd"),
+      ),
+    );
+  }, [doctorId, month, queryClient]);
 
   const days = useMemo(() => {
     const start = startOfMonth(month);

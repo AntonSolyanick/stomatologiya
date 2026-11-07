@@ -15,6 +15,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Toaster } from "@/components/ui/sonner";
+import { format, startOfMonth, endOfMonth } from "date-fns";
+import { bookedSlotsQuery, doctorsQuery, servicesQuery } from "@/lib/clinic";
 
 function NotFoundComponent() {
   return (
@@ -124,6 +126,27 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // Начинаем загрузку данных календаря сразу при открытии любой страницы,
+  // чтобы к переходу на «Запись» всё уже было в кэше (важно на медленной сети).
+  useEffect(() => {
+    queryClient.prefetchQuery(servicesQuery);
+    queryClient
+      .fetchQuery(doctorsQuery)
+      .then((doctors) => {
+        const first = doctors[0];
+        if (!first) return;
+        const now = new Date();
+        queryClient.prefetchQuery(
+          bookedSlotsQuery(
+            first.id,
+            format(startOfMonth(now), "yyyy-MM-dd"),
+            format(endOfMonth(now), "yyyy-MM-dd"),
+          ),
+        );
+      })
+      .catch(() => {});
+  }, [queryClient]);
 
   return (
     <QueryClientProvider client={queryClient}>
