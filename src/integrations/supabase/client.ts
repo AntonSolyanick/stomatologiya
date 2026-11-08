@@ -23,7 +23,10 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
     }
 
     headers.set('apikey', supabaseKey);
-    return fetch(input, { ...init, headers });
+    // Не ждём бесконечно: если сервер недоступен (например, без VPN), прерываем через 15 с.
+    const timeout = AbortSignal.timeout(15_000);
+    const signal = init?.signal ? AbortSignal.any([init.signal, timeout]) : timeout;
+    return fetch(input, { ...init, headers, signal });
   };
 }
 

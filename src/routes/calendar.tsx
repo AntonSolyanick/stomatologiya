@@ -57,7 +57,7 @@ const WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 function CalendarPage() {
   const { service: preselectedServiceId, doctor: doctorParam } = useSearch({ from: "/calendar" });
   const navigate = useNavigate({ from: "/calendar" });
-  const { data: doctors = [], isLoading: doctorsLoading } = useQuery(doctorsQuery);
+  const { data: doctors = [], isLoading: doctorsLoading, isError: doctorsError } = useQuery(doctorsQuery);
   const doctor = doctors.find((d) => d.id === doctorParam) ?? doctors[0] ?? null;
   const { user, profile } = useProfile();
   const isStaff = profile?.role === "doctor" || profile?.role === "admin";
@@ -71,7 +71,7 @@ function CalendarPage() {
 
   const { data: services = [], isLoading: servicesLoading } = useQuery(servicesQuery);
   const slotsQ = bookedSlotsQuery(doctor?.id ?? null, rangeFrom, rangeTo);
-  const { data: booked = {}, isLoading: slotsQLoading } = useQuery(slotsQ);
+  const { data: booked = {}, isLoading: slotsQLoading, isError: slotsError } = useQuery(slotsQ);
   const slotsLoading = doctorsLoading || slotsQLoading;
 
   // Заранее подгружаем следующий месяц, чтобы переключение было мгновенным.
@@ -114,6 +114,26 @@ function CalendarPage() {
           </Button>
         )}
       </header>
+
+      {(doctorsError || slotsError) && (
+        <div className="mx-auto mt-8 max-w-2xl rounded-2xl border border-destructive/30 bg-destructive/5 p-5 text-center">
+          <p className="font-semibold text-destructive">Не удалось связаться с сервером</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Проверьте интернет. Если сайт не открывается без VPN — включите VPN и повторите.
+          </p>
+          <Button
+            variant="outline"
+            className="mt-4"
+            onClick={() => {
+              void queryClient.refetchQueries({ queryKey: ["doctors"] });
+              void queryClient.refetchQueries({ queryKey: ["booked-slots"] });
+              void queryClient.refetchQueries({ queryKey: ["services"] });
+            }}
+          >
+            Повторить
+          </Button>
+        </div>
+      )}
 
       {doctors.length > 1 && (
         <div className="mx-auto mt-10 max-w-3xl">
