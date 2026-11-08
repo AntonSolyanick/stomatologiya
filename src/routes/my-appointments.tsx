@@ -30,7 +30,7 @@ type Row = {
   appointment_time: string;
   status: string;
   services: { name: string; price: number | null } | null;
-  doctors: { full_name: string } | null;
+  doctors: { specialization: string } | null;
 };
 
 function MyAppointments() {
@@ -45,7 +45,7 @@ function MyAppointments() {
       await (supabase.rpc as unknown as (fn: string) => Promise<unknown>)("claim_my_appointments");
       const { data, error } = await supabase
         .from("appointments")
-        .select("id, appointment_date, appointment_time, status, services(name, price), doctors(full_name)")
+        .select("id, appointment_date, appointment_time, status, services(name, price), doctors(specialization)")
         .eq("user_id", user!.id)
         .order("appointment_date", { ascending: true })
         .order("appointment_time", { ascending: true });
@@ -117,7 +117,7 @@ function MyAppointments() {
           {r.doctors && (
             <span className="flex items-center gap-1.5">
               <Stethoscope className="size-4 text-primary" />
-              {r.doctors.full_name}
+              {r.doctors.specialization}
             </span>
           )}
         </div>

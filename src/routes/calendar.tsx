@@ -14,7 +14,7 @@ import {
   subMonths,
 } from "date-fns";
 import { ru } from "date-fns/locale";
-import { ChevronLeft, ChevronRight, Clock, Info, ListOrdered } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Info, ListOrdered, Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookingDialog } from "@/components/BookingDialog";
@@ -131,12 +131,11 @@ function CalendarPage() {
               {doctors.map((d) => (
                 <SelectItem key={d.id} value={d.id}>
                   <span className="flex items-center gap-3">
-                    <span className="inline-flex size-8 items-center justify-center overflow-hidden rounded-full bg-mint text-xs font-bold text-mint-foreground">
-                      {d.photo_url ? <img src={d.photo_url} alt="" className="size-full object-cover" /> : d.full_name.slice(0, 1)}
+                    <span className="inline-flex size-8 items-center justify-center overflow-hidden rounded-full bg-mint text-mint-foreground">
+                      {d.photo_url ? <img src={d.photo_url} alt="" className="size-full object-cover" /> : <Stethoscope className="size-4" />}
                     </span>
                     <span className="text-left">
-                      <span className="block font-medium">{d.full_name}</span>
-                      <span className="block text-xs text-muted-foreground">{d.specialization}</span>
+                      <span className="block font-medium">{d.specialization}</span>
                     </span>
                   </span>
                 </SelectItem>
@@ -147,7 +146,7 @@ function CalendarPage() {
       )}
       {doctors.length === 1 && doctor && (
         <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-muted-foreground">
-          Врач: <span className="font-semibold text-foreground">{doctor.full_name}</span> · {doctor.specialization}
+          Врач: <span className="font-semibold text-foreground">{doctor.specialization}</span>
         </p>
       )}
 
@@ -247,7 +246,7 @@ function CalendarPage() {
       <BookingDialog
         date={selected}
         doctorId={doctor?.id ?? null}
-        doctorName={doctor?.full_name ?? ""}
+        doctorLabel={doctor?.specialization ?? ""}
         bookedTimes={booked[selectedKey] ?? []}
         services={services}
         servicesLoading={servicesLoading}

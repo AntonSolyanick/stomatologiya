@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, Sparkles, ShieldCheck, HeartPulse, Microscope } from "lucide-react";
+import { MapPin, Sparkles, ShieldCheck, HeartPulse, Microscope, Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-abstract.jpg";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Иванов Иван Иванович, стоматолог-терапевт и ортопед. 10 лет практики. Онлайн-запись на приём в Луганске.",
+          "Стоматолог-терапевт и ортопед. 10 лет практики. Онлайн-запись на приём в Луганске.",
       },
       { property: "og:title", content: "Стоматология — частный стоматолог в Луганске" },
       { property: "og:type", content: "website" },
@@ -153,16 +153,15 @@ function Specialists() {
           : doctors.map((d) => (
               <article key={d.id} className="flex flex-col p-6 surface-card hover:shadow-float">
                 <div className="flex items-center gap-4">
-                  <span className="inline-flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-mint font-display text-2xl font-extrabold text-mint-foreground">
+                  <span className="inline-flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-mint text-mint-foreground">
                     {d.photo_url ? (
-                      <img src={d.photo_url} alt={d.full_name} loading="lazy" className="size-full object-cover" />
+                      <img src={d.photo_url} alt="" loading="lazy" className="size-full object-cover" />
                     ) : (
-                      d.full_name.slice(0, 1)
+                      <Stethoscope className="size-7" />
                     )}
                   </span>
                   <div>
-                    <h3 className="text-lg font-bold">{d.full_name}</h3>
-                    <p className="text-sm text-muted-foreground">{d.specialization}</p>
+                    <h3 className="text-lg font-bold">{d.specialization}</h3>
                   </div>
                 </div>
                 <p className="mt-4 text-sm font-semibold text-primary">Стаж {d.experience_years} лет</p>

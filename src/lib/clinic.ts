@@ -1,6 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export const CLINIC = {
+  /** Имя врача на сайте не показывается, но значение сохранено — его можно снова вывести. */
   doctor: "Иванов Иван Иванович",
   role: "Стоматолог-терапевт, ортопед",
   name: "Стоматология",
