@@ -30,7 +30,7 @@ import type { User } from "@supabase/supabase-js";
 type Props = {
   date: Date | null;
   doctorId: string | null;
-  doctorName?: string;
+  doctorLabel?: string;
   bookedTimes: string[];
   services: Service[];
   servicesLoading: boolean;
@@ -52,7 +52,7 @@ const emptyGuest: GuestForm = { name: "", email: "", phone: "", birthdate: "" };
 export function BookingDialog({
   date,
   doctorId,
-  doctorName,
+  doctorLabel,
   bookedTimes,
   services,
   servicesLoading,
@@ -164,10 +164,10 @@ export function BookingDialog({
                     <span className="text-muted-foreground">Дата</span>
                     <span className="font-medium capitalize">{dateLabel}</span>
                   </p>
-                  {doctorName && (
+                  {doctorLabel && (
                     <p className="flex justify-between gap-4 py-1">
                       <span className="text-muted-foreground">Врач</span>
-                      <span className="text-right font-medium">{doctorName}</span>
+                      <span className="text-right font-medium">{doctorLabel}</span>
                     </p>
                   )}
                   <p className="flex justify-between gap-4 py-1">
