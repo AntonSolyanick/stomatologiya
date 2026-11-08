@@ -8,7 +8,7 @@ export function SiteFooter() {
         <div>
           <p className="font-display text-lg font-bold">{CLINIC.name}</p>
           <p className="mt-2 text-sm text-muted-foreground">
-            {CLINIC.doctor} — {CLINIC.role}
+            {CLINIC.role}
           </p>
         </div>
         <div className="space-y-3 text-sm text-muted-foreground">
