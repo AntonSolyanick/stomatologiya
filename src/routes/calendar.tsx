@@ -14,7 +14,7 @@ import {
   subMonths,
 } from "date-fns";
 import { ru } from "date-fns/locale";
-import { ChevronLeft, ChevronRight, Clock, Info, ListOrdered, Stethoscope } from "lucide-react";
+import { ChevronLeft, ChevronRight, ListOrdered, Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookingDialog } from "@/components/BookingDialog";
@@ -251,16 +251,6 @@ function CalendarPage() {
           </div>
         )}
 
-        <div className="mt-6 flex flex-col gap-2 border-t border-border pt-5 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p className="flex items-center gap-2">
-            <Clock className="size-4 text-primary" />
-            Слоты по одному часу
-          </p>
-          <p className="flex items-center gap-2">
-            <Info className="size-4 text-primary" />
-            Приглушённые дни недоступны
-          </p>
-        </div>
       </div>
 
       <BookingDialog
