@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { Menu, X, LogOut, CalendarCheck } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProfile } from "@/hooks/useProfile";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,26 +9,25 @@ import { CLINIC } from "@/lib/clinic";
 const links = [
   { to: "/", label: "Главная" },
   { to: "/services", label: "Услуги" },
-  { to: "/calendar", label: "Запись" },
+  { to: "/calendar", label: "Календарь" },
 ] as const;
+
+const patientLinks = [...links, { to: "/my-appointments", label: "Мои записи" }] as const;
 
 const doctorLinks = [
   { to: "/doctor", label: "Дашборд" },
-  { to: "/doctor/appointments", label: "Записи" },
+  { to: "/calendar", label: "Календарь" },
+  { to: "/doctor/appointments", label: "Все записи" },
   { to: "/doctor/patients", label: "Пациенты" },
+  { to: "/doctor/schedule", label: "Расписание" },
 ] as const;
 
-const adminLinks = [
-  { to: "/doctor", label: "Дашборд" },
-  { to: "/doctor/appointments", label: "Записи" },
-  { to: "/doctor/patients", label: "Пациенты" },
-  { to: "/admin/services", label: "Управление услугами" },
-] as const;
+const adminLinks = [...doctorLinks, { to: "/admin/services", label: "Услуги" }] as const;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { user, loading, isDoctor, isAdmin } = useProfile();
-  const nav = isAdmin ? adminLinks : isDoctor ? doctorLinks : links;
+  const nav = isAdmin ? adminLinks : isDoctor ? doctorLinks : user ? patientLinks : links;
   const router = useRouter();
 
   const signOut = async () => {
@@ -44,7 +43,7 @@ export function SiteHeader() {
           {CLINIC.name}
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 overflow-x-auto md:flex">
           {nav.map((l) => (
             <Link
               key={l.to}
@@ -61,12 +60,6 @@ export function SiteHeader() {
         <div className="hidden items-center gap-2 md:flex">
           {loading ? null : user ? (
             <>
-              {!isDoctor && !isAdmin && <Button asChild variant="ghost" size="sm">
-                <Link to="/my-appointments">
-                  <CalendarCheck className="size-4" />
-                  Мои записи
-                </Link>
-              </Button>}
               <Button variant="outline" size="sm" onClick={signOut}>
                 <LogOut className="size-4" />
                 Выйти
@@ -96,7 +89,7 @@ export function SiteHeader() {
 
       <div
         className={`overflow-hidden border-t border-border/70 bg-background/95 transition-[max-height,opacity] duration-300 md:hidden ${
-          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          open ? "max-h-[36rem] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4">
@@ -115,11 +108,6 @@ export function SiteHeader() {
           <div className="mt-2 flex flex-col gap-2">
             {user ? (
               <>
-                {!isDoctor && !isAdmin && <Button asChild variant="outline">
-                  <Link to="/my-appointments" onClick={() => setOpen(false)}>
-                    Мои записи
-                  </Link>
-                </Button>}
                 <Button variant="ghost" onClick={signOut}>
                   Выйти
                 </Button>
