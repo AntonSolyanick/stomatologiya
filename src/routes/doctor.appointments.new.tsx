@@ -17,7 +17,7 @@ import {
 import { useProfile } from "@/hooks/useProfile";
 import { StatusBadge } from "@/components/DoctorRoute";
 import {
-  TIME_SLOTS,
+  slotsForDate,
   bookAppointment,
   bookedSlotsQuery,
   doctorsQuery,
@@ -61,7 +61,8 @@ function NewAppointment() {
 
   const { data: booked = {} } = useQuery(bookedSlotsQuery(doctorId, date, date));
   const taken = booked[date] ?? [];
-  const isSunday = date ? parseISO(date).getDay() === 0 : false;
+  const daySlots = date ? slotsForDate(findMyDoctor(doctors, profile)?.work_hours, parseISO(date)) : [];
+  const isSunday = daySlots.length === 0;
 
   const doSearch = async () => {
     setSearching(true);
@@ -140,7 +141,7 @@ function NewAppointment() {
             <p className="text-sm text-muted-foreground">В этот день нет свободных слотов.</p>
           ) : (
             <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
-              {TIME_SLOTS.map((s) => {
+              {daySlots.map((s) => {
                 const dis = taken.includes(s);
                 return (
                   <button

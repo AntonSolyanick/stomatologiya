@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { format, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
-import { Download, Plus } from "lucide-react";
+import { CalendarDays, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -50,38 +50,15 @@ function AllAppointments() {
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE));
   const visible = filtered.slice((page - 1) * PAGE, page * PAGE);
 
-  const exportCsv = () => {
-    const head = ["Дата", "Время", "Пациент", "Телефон", "Email", "Услуга", "Цена", "Статус"];
-    const lines = filtered.map((r) =>
-      [
-        r.appointment_date,
-        r.appointment_time.slice(0, 5),
-        r.patient_name,
-        r.patient_phone,
-        r.patient_email,
-        r.services?.name ?? "",
-        r.services?.price ?? "",
-        r.status,
-      ]
-        .map((v) => `"${String(v).replace(/"/g, '""')}"`)
-        .join(";"),
-    );
-    const blob = new Blob(["\ufeff" + [head.join(";"), ...lines].join("\n")], {
-      type: "text/csv;charset=utf-8",
-    });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `zapisi-${format(new Date(), "yyyy-MM-dd")}.csv`;
-    a.click();
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <h1 className="text-3xl font-extrabold">Все записи</h1>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={exportCsv} disabled={!filtered.length}>
-            <Download className="size-4" /> CSV
+          <Button asChild variant="outline">
+            <Link to="/calendar">
+              <CalendarDays className="size-4" /> К календарю
+            </Link>
           </Button>
           <Button asChild>
             <Link to="/doctor/appointments/new">

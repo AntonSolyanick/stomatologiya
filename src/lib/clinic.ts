@@ -22,6 +22,25 @@ export const TIME_SLOTS = [
   "18:00",
 ] as const;
 
+/** Часовые слоты дня по рабочим часам врача (начало включительно, конец — время окончания приёма). */
+export function slotsForDate(
+  workHours: Record<string, [string, string] | null> | null | undefined,
+  date: Date,
+): string[] {
+  if (!workHours) return date.getDay() === 0 ? [] : [...TIME_SLOTS];
+  const range = workHours[String(date.getDay())];
+  if (!range) return [];
+  const toMin = (t: string) => {
+    const [h, m] = t.split(":").map(Number);
+    return (h ?? 0) * 60 + (m ?? 0);
+  };
+  const out: string[] = [];
+  for (let t = toMin(range[0]); t + 60 <= toMin(range[1]); t += 60) {
+    out.push(`${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")}`);
+  }
+  return out;
+}
+
 export type Service = {
   id: string;
   name: string;

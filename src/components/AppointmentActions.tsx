@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useProfile } from "@/hooks/useProfile";
 import {
-  TIME_SLOTS,
+  slotsForDate,
   bookedSlotsQuery,
   doctorsQuery,
   updateAppointment,
@@ -87,13 +87,15 @@ function RescheduleDialog({ row, onClose }: { row: DoctorAppointment; onClose: (
   const qc = useQueryClient();
   const { profile } = useProfile();
   const { data: doctors = [] } = useQuery(doctorsQuery);
-  const doctorId = findMyDoctor(doctors, profile)?.id ?? null;
+  const myDoctor = findMyDoctor(doctors, profile);
+  const doctorId = myDoctor?.id ?? null;
   const [date, setDate] = useState(row.appointment_date);
   const [time, setTime] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const { data: booked = {} } = useQuery(bookedSlotsQuery(doctorId, date, date));
   const taken = booked[date] ?? [];
-  const isSunday = date ? parseISO(date).getDay() === 0 : false;
+  const daySlots = date ? slotsForDate(myDoctor?.work_hours, parseISO(date)) : [];
+  const isSunday = daySlots.length === 0;
 
   const save = async () => {
     if (!time) return;
@@ -138,7 +140,7 @@ function RescheduleDialog({ row, onClose }: { row: DoctorAppointment; onClose: (
             <p className="text-sm text-muted-foreground">В этот день нет свободных слотов.</p>
           ) : (
             <div className="grid grid-cols-3 gap-2">
-              {TIME_SLOTS.map((s) => {
+              {daySlots.map((s) => {
                 const dis = taken.includes(s);
                 return (
                   <button

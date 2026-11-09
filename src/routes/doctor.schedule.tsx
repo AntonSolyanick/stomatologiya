@@ -35,6 +35,10 @@ function Schedule() {
 
   const save = async () => {
     if (!doctor) return;
+    if (Object.values(hours).some((v) => v && (!v[0] || !v[1] || v[0] >= v[1]))) {
+      toast.error("Конец рабочего дня должен быть позже начала");
+      return;
+    }
     setSaving(true);
     const { error } = await supabase.from("doctors").update({ work_hours: hours }).eq("id", doctor.id);
     setSaving(false);
@@ -51,7 +55,7 @@ function Schedule() {
       <div>
         <h1 className="text-3xl font-extrabold">Расписание</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Рабочие часы по дням недели. Блокировка слотов (обед, отпуск) появится в следующей версии.
+          Укажите начало и конец рабочего дня. Запись в календаре будет доступна только в эти часы (приём по 1 часу).
         </p>
       </div>
       {!doctor ? (
@@ -73,9 +77,10 @@ function Schedule() {
                 </div>
                 {v ? (
                   <div className="flex items-center gap-2">
-                    <Input type="time" className="w-32" value={v[0]} onChange={(e) => setHours({ ...hours, [k]: [e.target.value, v[1]] })} />
-                    <span>—</span>
-                    <Input type="time" className="w-32" value={v[1]} onChange={(e) => setHours({ ...hours, [k]: [v[0], e.target.value] })} />
+                    <span className="text-sm text-muted-foreground">с</span>
+                    <Input type="time" aria-label={`${label}: начало`} className="w-32" value={v[0]} onChange={(e) => setHours({ ...hours, [k]: [e.target.value, v[1]] })} />
+                    <span className="text-sm text-muted-foreground">до</span>
+                    <Input type="time" aria-label={`${label}: конец`} className="w-32" value={v[1]} onChange={(e) => setHours({ ...hours, [k]: [v[0], e.target.value] })} />
                   </div>
                 ) : (
                   <span className="text-sm text-muted-foreground">Выходной</span>
