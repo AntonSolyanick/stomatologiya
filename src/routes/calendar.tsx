@@ -27,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TIME_SLOTS, bookedSlotsQuery, doctorsQuery, servicesQuery } from "@/lib/clinic";
+import { slotsForDate, bookedSlotsQuery, doctorsQuery, servicesQuery } from "@/lib/clinic";
 
 export const Route = createFileRoute("/calendar")({
   validateSearch: (search: Record<string, unknown>): { service?: string; doctor?: string } => ({
@@ -211,14 +211,15 @@ function CalendarPage() {
             {days.map((day, index) => {
               if (!day) return <span key={`empty-${index}`} />;
               const key = format(day, "yyyy-MM-dd");
-              const takenCount = booked[key]?.length ?? 0;
-              const isSunday = day.getDay() === 0;
+              const daySlots = slotsForDate(doctor?.work_hours, day);
+              const takenCount = (booked[key] ?? []).filter((t) => daySlots.includes(t)).length;
+              const isSunday = daySlots.length === 0;
               const isPast = isBefore(day, today);
-              const isFull = takenCount >= TIME_SLOTS.length;
+              const isFull = takenCount >= daySlots.length;
               const disabled = isSunday || isPast || isFull;
               const isToday = isSameDay(day, today);
               // Чем больше записей, тем насыщеннее фон (один оттенок основного цвета).
-              const heat = isPast || isSunday || takenCount === 0 ? 0 : 12 + Math.round((takenCount / TIME_SLOTS.length) * 58);
+              const heat = isPast || isSunday || takenCount === 0 ? 0 : 12 + Math.round((takenCount / daySlots.length) * 58);
               const heatStyle = heat
                 ? { backgroundColor: `color-mix(in oklab, var(--primary) ${heat}%, var(--card))`, color: heat > 45 ? "var(--primary-foreground)" : undefined }
                 : undefined;
@@ -239,7 +240,7 @@ function CalendarPage() {
                   {format(day, "d")}
                   {!disabled && (
                     <span className={`mt-0.5 hidden text-[10px] font-normal sm:block ${heat > 45 ? "" : "text-muted-foreground"}`}>
-                      {TIME_SLOTS.length - takenCount} своб.
+                      {daySlots.length - takenCount} своб.
                     </span>
                   )}
                   {isFull && !isPast && !isSunday && (
@@ -258,6 +259,7 @@ function CalendarPage() {
         doctorId={doctor?.id ?? null}
         doctorLabel={doctor?.specialization ?? ""}
         bookedTimes={booked[selectedKey] ?? []}
+        slots={selected ? slotsForDate(doctor?.work_hours, selected) : []}
         services={services}
         servicesLoading={servicesLoading}
         preselectedServiceId={preselectedServiceId ?? null}

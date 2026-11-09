@@ -19,7 +19,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   CLINIC,
-  TIME_SLOTS,
   bookAppointment,
   isSlotTaken,
   formatPrice,
@@ -32,6 +31,7 @@ type Props = {
   doctorId: string | null;
   doctorLabel?: string;
   bookedTimes: string[];
+  slots: string[];
   services: Service[];
   servicesLoading: boolean;
   preselectedServiceId?: string | null;
@@ -54,6 +54,7 @@ export function BookingDialog({
   doctorId,
   doctorLabel,
   bookedTimes,
+  slots,
   services,
   servicesLoading,
   preselectedServiceId,
@@ -212,7 +213,7 @@ export function BookingDialog({
               <div>
                 <p className="mb-3 text-sm font-medium">Выберите время приёма</p>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  {TIME_SLOTS.map((slot) => {
+                  {slots.map((slot) => {
                     const taken = bookedTimes.includes(slot);
                     return (
                       <button
