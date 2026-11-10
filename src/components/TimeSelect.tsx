@@ -16,9 +16,11 @@ export function TimeSelect({
   ariaLabel: string;
   className?: string;
 }) {
-  const [rawHour, rawMinute] = (value ?? "").split(":");
-  const hour = HOURS.includes(rawHour) ? rawHour : HOURS[0]!;
-  const minute = MINUTES.includes(rawMinute) ? rawMinute : MINUTES[0]!;
+  const parts = (value ?? "").split(":");
+  const rawHour = parts[0] ?? "";
+  const rawMinute = parts[1] ?? "";
+  const hour = HOURS.includes(rawHour) ? rawHour : "00";
+  const minute = MINUTES.includes(rawMinute) ? rawMinute : "00";
 
   return (
     <div className={cn("flex items-center gap-1", className)}>
