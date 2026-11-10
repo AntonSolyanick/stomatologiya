@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { TimeSelect } from "@/components/TimeSelect";
 import { Switch } from "@/components/ui/switch";
 import { useProfile } from "@/hooks/useProfile";
 import { supabase } from "@/integrations/supabase/client";
@@ -78,9 +78,9 @@ function Schedule() {
                 {v ? (
                   <div className="flex items-center gap-2">
                     <span className="text-sm text-muted-foreground">с</span>
-                    <Input type="time" aria-label={`${label}: начало`} className="w-32" value={v[0]} onChange={(e) => setHours({ ...hours, [k]: [e.target.value, v[1]] })} />
+                    <TimeSelect ariaLabel={label} value={v[0]} onChange={(t) => setHours({ ...hours, [k]: [t, v[1]] })} />
                     <span className="text-sm text-muted-foreground">до</span>
-                    <Input type="time" aria-label={`${label}: конец`} className="w-32" value={v[1]} onChange={(e) => setHours({ ...hours, [k]: [v[0], e.target.value] })} />
+                    <TimeSelect ariaLabel={label} value={v[1]} onChange={(t) => setHours({ ...hours, [k]: [v[0], t] })} />
                   </div>
                 ) : (
                   <span className="text-sm text-muted-foreground">Выходной</span>
