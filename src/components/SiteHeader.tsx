@@ -15,14 +15,21 @@ const links = [
 const patientLinks = [...links, { to: "/my-appointments", label: "Мои записи" }] as const;
 
 const doctorLinks = [
-  { to: "/doctor", label: "Дашборд" },
   { to: "/calendar", label: "Календарь" },
   { to: "/doctor/appointments", label: "Все записи" },
   { to: "/doctor/patients", label: "Пациенты" },
   { to: "/doctor/schedule", label: "Расписание" },
+  { to: "/doctor", label: "Статистика" },
 ] as const;
 
-const adminLinks = [...doctorLinks, { to: "/admin/services", label: "Услуги" }] as const;
+const adminLinks = [
+  { to: "/calendar", label: "Календарь" },
+  { to: "/doctor/appointments", label: "Все записи" },
+  { to: "/doctor/patients", label: "Пациенты" },
+  { to: "/doctor/schedule", label: "Расписание" },
+  { to: "/admin/services", label: "Услуги" },
+  { to: "/doctor", label: "Статистика" },
+] as const;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
