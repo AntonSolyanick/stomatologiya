@@ -218,8 +218,12 @@ function CalendarPage() {
               const isFull = takenCount >= daySlots.length;
               const disabled = isSunday || isPast || isFull;
               const isToday = isSameDay(day, today);
-              // Чем больше записей, тем насыщеннее фон (один оттенок основного цвета).
-              const heat = isPast || isSunday || takenCount === 0 ? 0 : 12 + Math.round((takenCount / daySlots.length) * 58);
+              // Закрашивание по числу записей видят только врач и администратор;
+              // для пациентов и гостей календарь остаётся однотонным.
+              const heat =
+                !isStaff || isPast || isSunday || takenCount === 0
+                  ? 0
+                  : 12 + Math.round((takenCount / daySlots.length) * 58);
               const heatStyle = heat
                 ? { backgroundColor: `color-mix(in oklab, var(--primary) ${heat}%, var(--card))`, color: heat > 45 ? "var(--primary-foreground)" : undefined }
                 : undefined;
